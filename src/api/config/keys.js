@@ -1,3 +1,3 @@
 module.exports = {
-  jwt: { tokenKey: "vasiasASewqd231wWdwqd" }
+    jwt: { tokenKey: 'vasiasASewqd231wWdwqd' },
 }

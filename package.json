@@ -1,21 +1,32 @@
 {
-  "name": "node-expreess-my",
-  "version": "1.0.0",
-  "description": "",
-  "main": "main.js",
-  "scripts": {
-    "ui": "npm start --prefix ./src/ui",
-    "api": "nodemon ./src/api/server.js"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
-    "mongodb": "^3.5.1",
-    "mongoose": "^5.8.9",
-    "mongoose-auto-increment": "^5.0.1",
-    "socket.io": "^2.3.0"
-  }
+    "name": "node-expreess-my",
+    "version": "1.0.0",
+    "description": "",
+    "main": "main.js",
+    "scripts": {
+        "ui": "npm start --prefix ./src/ui",
+        "api": "nodemon ./src/api/server.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@rematch/core": "^1.4.0",
+        "antd": "^4.0.4",
+        "axios": "^0.19.2",
+        "bcrypt": "^3.0.8",
+        "body-parser": "^1.19.0",
+        "express": "^4.17.1",
+        "express-session": "^1.17.0",
+        "jsonwebtoken": "^8.5.1",
+        "mongodb": "^3.5.1",
+        "mongoose": "^5.8.9",
+        "mongoose-auto-increment": "^5.0.1",
+        "multer": "^1.4.2",
+        "react-redux": "^7.2.0",
+        "react-router-dom": "^5.1.2",
+        "socket.io": "^2.3.0",
+        "swagger-jsdoc": "^4.0.0",
+        "swagger-ui-express": "^4.1.4"
+    },
+    "devDependencies": {}
 }
