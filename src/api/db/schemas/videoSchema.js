@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const videoSchema = mongoose.Schema(
     {
         name: String,
-        author: String,
+        author: mongoose.Schema.Types.ObjectId,
         path: String,
     },
     { timestamps: true }

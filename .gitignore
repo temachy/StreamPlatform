@@ -2,3 +2,6 @@
 /ui/node_modules
 src/ui/public 
 src/api/mediaFiles
+combined.log
+error.log
+

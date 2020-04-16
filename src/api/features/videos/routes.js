@@ -15,31 +15,11 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({ storage: storage })
-/**
- * @swagger
- * /list:
- *   post:
- *     description: Login to the application
- *     produces:
- *       - application/json
- *     parameters:
- *       - name: username
- *         description: Username to use for login.
- *         in: formData
- *         required: true
- *         type: string
- *       - name: password
- *         description: User's password.
- *         in: formData
- *         required: true
- *         type: string
- *     responses:
- *       200:
- *         description: login
- */
 router.get('/list', controller.videoList)
 
-router.get('/:id', controller.getVideo)
+router.get('/:id', controller.getVideoFile)
+router.get('/:id/meta', controller.getVideoMeta)
+
 router.post('/upload', upload.single('video'), controller.uploadVideo)
 
 module.exports = router

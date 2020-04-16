@@ -3,3 +3,12 @@ body,
 #root {
     height: 100%;
 }
+
+.flex {
+    display: flex;
+}
+
+.container {
+    width: 1360px;
+    margin: 0 auto;
+}

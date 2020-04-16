@@ -5,7 +5,18 @@
     "main": "main.js",
     "scripts": {
         "ui": "npm start --prefix ./src/ui",
-        "api": "nodemon ./src/api/server.js"
+        "api": "nodemon ./src/api/server.js",
+        "test": "jest"
+    },
+    "jest": {
+        "testEnvironment": "node",
+        "coveragePathIgnorePatterns": [
+            "/node_modules/",
+            "/src/ui/"
+        ],
+        "modulePathIgnorePatterns": [
+            "<rootDir>/src/ui"
+        ]
     },
     "author": "",
     "license": "ISC",
@@ -18,6 +29,7 @@
         "express": "^4.17.1",
         "express-session": "^1.17.0",
         "jsonwebtoken": "^8.5.1",
+        "mime-types": "^2.1.26",
         "mongodb": "^3.5.1",
         "mongoose": "^5.8.9",
         "mongoose-auto-increment": "^5.0.1",
@@ -26,7 +38,10 @@
         "react-router-dom": "^5.1.2",
         "socket.io": "^2.3.0",
         "swagger-jsdoc": "^4.0.0",
-        "swagger-ui-express": "^4.1.4"
+        "swagger-ui-express": "^4.1.4",
+        "winston": "^3.2.1"
     },
-    "devDependencies": {}
+    "devDependencies": {
+        "supertest": "^4.0.2"
+    }
 }

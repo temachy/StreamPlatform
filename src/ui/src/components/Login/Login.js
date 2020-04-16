@@ -1,9 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Form, Input, Button } from 'antd'
+import { Link } from 'react-router-dom'
 import styles from './Login.module.scss'
-const Login = props => {
-    const handleSubmit = values => {
+const Login = (props) => {
+    const handleSubmit = (values) => {
         props.login(values)
     }
     return (
@@ -47,7 +48,7 @@ const Login = props => {
                     </Button>
                 </Form.Item>
                 <Button type="dashed" htmlType="button">
-                    Sign up
+                    <Link to="/signup">Sign up</Link>
                 </Button>
             </Form>
         </div>
@@ -58,7 +59,7 @@ const mapDispatch = ({ auth: { login } }) => ({
     login,
 })
 
-const mapState = state => ({
+const mapState = (state) => ({
     auth: state.auth.user,
 })
 

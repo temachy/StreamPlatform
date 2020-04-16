@@ -12,4 +12,9 @@ const apiRequest = (url, method = 'GET', body = {}, headers = {}) => {
     return axios(options)
 }
 
-export { apiRequest }
+const getToken = () => {
+    const token = localStorage.getItem('token')
+    return 'Bearer ' + token
+}
+
+export { apiRequest, getToken }

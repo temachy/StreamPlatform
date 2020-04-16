@@ -1,5 +1,5 @@
 import jwtDecode from 'jwt-decode'
-import { login as loginApi } from '../api/auth'
+import { login as loginApi, logout as logoutApi } from '../api/auth'
 import history from '../utils/history'
 export const auth = {
     state: {
@@ -11,7 +11,7 @@ export const auth = {
             return { ...state, ...payload }
         },
     },
-    effects: dispatch => ({
+    effects: (dispatch) => ({
         async checkAuth() {
             const user = localStorage.getItem('user')
             if (!user) {
@@ -27,6 +27,7 @@ export const auth = {
                 return dispatch.auth.setUser({ user: null, isLogged: false })
             }
             dispatch.auth.setUser({ user: parsed, isLogged: true })
+            return true
         },
         async login(payload) {
             try {
@@ -38,9 +39,25 @@ export const auth = {
                 localStorage.setItem('user', JSON.stringify(parsed))
                 dispatch.auth.setUser({ user: parsed, isLogged: true })
                 history.push('/')
+                return true
             } catch (error) {
                 console.log('error', error)
                 dispatch.auth.setUser({ user: null, isLogged: false })
+                return false
+            }
+        },
+        async logout() {
+            try {
+                await logoutApi()
+                localStorage.removeItem('token')
+                localStorage.removeItem('user')
+                dispatch.auth.setUser({ user: null, isLogged: false })
+                history.push('/login')
+                return true
+            } catch (error) {
+                console.log('error', error)
+                dispatch.auth.setUser({ user: null, isLogged: false })
+                return false
             }
         },
     }),

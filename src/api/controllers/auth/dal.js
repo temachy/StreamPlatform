@@ -1,4 +1,4 @@
-const { UserSchema } = require('../../db/schemas/usersSchema')
+const UserSchema = require('../../db/schemas/usersSchema')
 
 function getUser(login) {
     return UserSchema.findOne({

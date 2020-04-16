@@ -1,12 +1,16 @@
 import React from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { Layout } from 'antd'
+import styles from './Routes.module.scss'
+
 import PrivateRoute from '../AuthHOC'
 import Login from '../Login/Login'
 import Header from '../Header'
 import UploadVideo from '../UploadVideo'
 import Main from '../Main'
-import styles from './Routes.module.scss'
+import UserPage from '../UserPage'
+import VideoPage from '../VideoPage'
+import SignUp from '../SignUp'
 
 const { Content } = Layout
 
@@ -24,7 +28,18 @@ const Routes = () => {
                         path={'/upload-video'}
                         component={UploadVideo}
                     />
+                    <PrivateRoute
+                        exact
+                        path={'/users/:id'}
+                        component={UserPage}
+                    />
+                    <PrivateRoute
+                        exact
+                        path={'/video/:id'}
+                        component={VideoPage}
+                    />
                     <Route exact path="/login" component={Login} />
+                    <Route exact path="/signup" component={SignUp} />
                 </Content>
                 <Route component={NotFound} />
             </Switch>

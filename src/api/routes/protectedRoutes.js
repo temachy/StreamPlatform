@@ -1,20 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const videos = require('../features/videos/routes')
+const users = require('../features/users/routes')
 
-/**
- * @swagger
- * /users:
- *   get:
- *     description: Returns users
- *     produces:
- *      - application/json
- *     responses:
- *       200:
- *         description: users
- *         schema:
- *           type: array
- */
 router.use('/video', videos)
+router.use('/users', users)
 
 module.exports = router

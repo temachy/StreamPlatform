@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
-import { Spin } from 'antd'
 import { connect } from 'react-redux'
 import styles from './Main.module.scss'
+import VideoList from '../VideoList'
+
 const Main = ({ loadVideos, videoList }) => {
     useEffect(() => {
         loadVideos()
@@ -9,16 +10,12 @@ const Main = ({ loadVideos, videoList }) => {
 
     return (
         <div className={styles.list}>
-            {videoList && videoList.length ? (
-                videoList.map(video => <div>{video.name}</div>)
-            ) : (
-                <Spin />
-            )}
+            <VideoList list={videoList} />
         </div>
     )
 }
 
-const mapState = state => ({
+const mapState = (state) => ({
     videoList: state.video.list,
 })
 

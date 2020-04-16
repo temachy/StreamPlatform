@@ -11,3 +11,5 @@ export const login = ({ login, password }) =>
             'Content-type': 'application/json',
         }
     )
+
+export const logout = () => axios.post('/api/logout')

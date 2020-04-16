@@ -22,22 +22,20 @@ const userSchema = mongoose.Schema(
 
 userSchema.pre(
     'save',
-    function(next) {
+    function (next) {
         const user = this
         user._id = ObjectId()
         if (!user.isModified('password')) {
             return next()
         }
-        bcrypt.hash(user.password, 10).then(hashedPassword => {
+        bcrypt.hash(user.password, 10).then((hashedPassword) => {
             user.password = hashedPassword
             next()
         })
     },
-    function(err) {
+    function (err) {
         next(err)
     }
 )
 
-module.exports = {
-    UserSchema: mongoose.model('Users', userSchema),
-}
+module.exports = mongoose.model('Users', userSchema)

@@ -1,21 +1,51 @@
-import React from 'react'
-import { Layout, Input, AutoComplete, Button, Drawer } from 'antd'
+import React, { useState } from 'react'
+import { Layout, AutoComplete, Drawer, Button } from 'antd'
 import styles from './Header.module.scss'
 import MenuOutlined from '@ant-design/icons/MenuOutlined'
-const Header = () => {
+import { Link } from 'react-router-dom'
+import VideoImage from '../../assets/cinema.svg'
+import { connect } from 'react-redux'
+const Header = ({ logout }) => {
+    const [isOpen, setIsOpen] = useState(false)
+
+    const handleOpen = () => {
+        setIsOpen(true)
+    }
+
+    const handleClose = () => {
+        setIsOpen(false)
+    }
+
+    const handleLogout = () => {
+        logout()
+    }
+
     return (
         <Layout.Header className={styles.header}>
             <div className={styles.container}>
-                <h1 className={styles.title}>Main</h1>
-                <AutoComplete />
+                <Link to={'/'}>
+                    <img className={styles.logo} src={VideoImage} alt="" />
+                </Link>
 
-                <Button>
-                    <MenuOutlined />
-                </Button>
-                <Drawer />
+                <AutoComplete style={{ width: 500 }} />
+
+                <MenuOutlined
+                    onClick={handleOpen}
+                    style={{ color: 'white', fontSize: 26, cursor: 'pointer' }}
+                />
+
+                <Drawer onClose={handleClose} visible={isOpen}>
+                    <Button type="link" onClick={handleLogout}>
+                        Logout
+                    </Button>
+                </Drawer>
             </div>
         </Layout.Header>
     )
 }
 
-export default Header
+const mapDispatch = ({ auth: { logout } }) => ({
+    logout,
+})
+
+export default connect(null, mapDispatch)(Header)
