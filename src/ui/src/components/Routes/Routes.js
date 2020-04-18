@@ -11,6 +11,7 @@ import Main from '../Main'
 import UserPage from '../UserPage'
 import VideoPage from '../VideoPage'
 import SignUp from '../SignUp'
+import Dashboard from '../Dashboard'
 
 const { Content } = Layout
 
@@ -25,7 +26,7 @@ const Routes = () => {
                     <PrivateRoute exact path={'/'} component={Main} />
                     <PrivateRoute
                         exact
-                        path={'/upload-video'}
+                        path={'/upload'}
                         component={UploadVideo}
                     />
                     <PrivateRoute
@@ -38,6 +39,7 @@ const Routes = () => {
                         path={'/video/:id'}
                         component={VideoPage}
                     />
+
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/signup" component={SignUp} />
                 </Content>

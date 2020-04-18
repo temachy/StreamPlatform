@@ -1,3 +1,5 @@
 import { auth } from './auth'
 import { video } from './video'
-export { auth, video }
+import { signUp } from './signUp'
+
+export { auth, video, signUp }

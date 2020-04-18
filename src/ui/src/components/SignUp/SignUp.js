@@ -3,8 +3,15 @@ import { connect } from 'react-redux'
 import { Form, Input, Button } from 'antd'
 import styles from './SignUp.module.scss'
 import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
 
 const SignUp = (props) => {
+    useEffect(() => {
+        return () => {
+            props.clearState()
+        }
+    }, [])
+
     const handleSubmit = (values) => {
         props.signUp(values)
     }
@@ -96,8 +103,13 @@ const SignUp = (props) => {
     )
 }
 
-const mapDispatch = ({ auth: { signUp } }) => ({
-    signUp,
+const mapState = (state) => ({
+    loading: state.signUp.loading,
 })
 
-export default connect(null, mapDispatch)(SignUp)
+const mapDispatch = ({ signUp: { signUp, clearState } }) => ({
+    signUp,
+    clearState,
+})
+
+export default connect(mapState, mapDispatch)(SignUp)

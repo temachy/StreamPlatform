@@ -59,8 +59,4 @@ const mapDispatch = ({ auth: { login } }) => ({
     login,
 })
 
-const mapState = (state) => ({
-    auth: state.auth.user,
-})
-
 export default connect(null, mapDispatch)(Login)

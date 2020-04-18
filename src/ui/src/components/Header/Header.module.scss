@@ -16,3 +16,21 @@
 .logo {
     width: 50px;
 }
+
+.linkList {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    padding-top: 50px;
+    & > * {
+        margin-top: 10px;
+        color: black;
+    }
+}
+
+.logout {
+    cursor: pointer;
+    margin-top: 10px;
+}

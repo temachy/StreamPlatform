@@ -19,10 +19,16 @@ const VideoPreview = ({ video }) => {
         >
             <Link to={`/video/${video._id}`}>
                 <Card.Meta
-                    title={video.name}
+                    title={<span style={{ color: 'white' }}>{video.name}</span>}
                     description={
                         video.user && (
-                            <Link to={`/users/${video.user._id}`}>
+                            <Link
+                                style={{
+                                    color: '#c3c3c3',
+                                    textDecoration: 'underline',
+                                }}
+                                to={`/users/${video.user._id}`}
+                            >
                                 {video.user.login}
                             </Link>
                         )
