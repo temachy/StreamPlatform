@@ -24,7 +24,12 @@ function createUser(body) {
     return new Users(body).save()
 }
 
+function getAll() {
+    return Users.find()
+}
+
 module.exports = {
     getUserById,
     createUser,
+    getAll,
 }
