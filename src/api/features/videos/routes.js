@@ -20,6 +20,13 @@ router.get('/list', controller.videoList)
 router.get('/:id', controller.getVideoFile)
 router.get('/:id/meta', controller.getVideoMeta)
 
-router.post('/upload', upload.single('video'), controller.uploadVideo)
+router.post(
+    '/upload',
+    upload.fields([
+        { name: 'video', maxCount: 1 },
+        { name: 'poster', maxCount: 1 },
+    ]),
+    controller.uploadVideo
+)
 
 module.exports = router

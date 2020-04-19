@@ -19,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(session({ secret: 'mySuperSecret' }))
 
 app.use('/', express.static(path.join(__dirname, '..', 'ui', 'build')))
+app.use('/', express.static(path.join(__dirname, '..', 'api', 'mediaFiles')))
 
 app.use((req, res, next) => {
     logger.info(req.originalUrl)

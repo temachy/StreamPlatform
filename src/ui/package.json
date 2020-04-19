@@ -40,6 +40,8 @@
     "devDependencies": {
         "enzyme": "^3.11.0",
         "enzyme-adapter-react-16": "^1.15.2",
-        "node-sass": "^4.13.1"
+        "node-sass": "^4.13.1",
+        "react-app-rewire-multiple-entry": "^2.2.0",
+        "react-app-rewired": "^2.1.5"
     }
 }

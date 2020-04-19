@@ -5,6 +5,7 @@
     "main": "main.js",
     "scripts": {
         "ui": "npm start --prefix ./src/ui",
+        "admin": "npm start --prefix ./src/admin",
         "api": "nodemon ./src/api/server.js",
         "test": "jest"
     },

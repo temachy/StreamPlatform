@@ -1,0 +1,54 @@
+.recorderWrap {
+    video {
+        object-fit: scale-down;
+    }
+}
+
+.button {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 30px;
+    background-color: red;
+    cursor: pointer;
+}
+
+.absoluteLabel {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 80%;
+    color: white;
+    font-size: 14px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.cameraOn {
+    @extend .absoluteLabel;
+}
+
+.recorder {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    .stop {
+        @extend .button;
+    }
+
+    .start {
+        @extend .button;
+        border-radius: 50%;
+    }
+
+    .timeCount {
+        position: absolute;
+        right: 20%;
+        top: 20%;
+        color: white;
+    }
+}

@@ -1,5 +1,6 @@
 const dal = require('./dal')
 const fs = require('fs')
+const path = require('path')
 const mime = require('mime-types')
 const util = require('util')
 const fsStat = util.promisify(fs.stat)
@@ -7,7 +8,14 @@ const fsStat = util.promisify(fs.stat)
 async function videoList(req, res) {
     try {
         const videos = await dal.getVideosList()
-        res.json(videos)
+        const withPath = videos.map((video) => {
+            if (!video.posterPath) return video
+            return {
+                ...video,
+                posterPath: '/' + path.basename(video.posterPath),
+            }
+        })
+        res.json(withPath)
     } catch (error) {
         console.log('error', error)
         res.error(error)
@@ -31,6 +39,8 @@ async function getVideoFile(req, res) {
         const video = await dal.getVideo(req.params.id)
         if (!video) return res.send(404)
         const { path } = video
+        if (!path) return res.send(404)
+
         const stat = await fsStat(path)
         const fileSize = stat.size
         const range = req.headers.range
@@ -64,13 +74,13 @@ async function getVideoFile(req, res) {
 
 async function uploadVideo(req, res) {
     try {
-        const { file, decoded: user } = req
-        await dal.createVideo(
-            file.originalname.split('.').slice(0, -1).join('.'),
-            file.path,
-            user._id
-        )
-        res.json({ message: 'File ' + file.originalname + ' was uploaded!' })
+        const {
+            files: { video, poster },
+            body: { name },
+            decoded: user,
+        } = req
+        await dal.createVideo(name, video[0].path, poster[0].path, user._id)
+        res.json({ message: `Video ${name} was uploaded!` })
     } catch (error) {
         console.log('error', error)
         res.error(error)

@@ -46,8 +46,13 @@ function getVideo(id) {
     return Videos.findOne({ _id: id })
 }
 
-function createVideo(name, path, author) {
-    return Videos.create({ name, path, author: ObjectId(author) })
+function createVideo(name, path, posterPath, author) {
+    return new Videos({
+        name,
+        path,
+        posterPath,
+        author: ObjectId(author),
+    }).save()
 }
 
 module.exports = {

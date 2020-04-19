@@ -12,7 +12,7 @@ const VideoPreview = ({ video }) => {
             style={{ width: 300, background: '#3a3d46', border: 'none' }}
             cover={
                 <Link to={`/video/${video._id}`}>
-                    <PreviewPlayer file={file} />
+                    <PreviewPlayer poster={video.posterPath} file={file} />
                 </Link>
             }
             loading={!file}

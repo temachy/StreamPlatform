@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react'
 import style from './VideoPreview.module.scss'
 import Player from 'react-player'
 
-const PreviewPlayer = ({ file }) => {
+const PreviewPlayer = ({ file, poster }) => {
     const [isPlaying, setIsPlaying] = useState(false)
     const player = useRef(null)
     const handlePlay = () => {
@@ -13,7 +13,6 @@ const PreviewPlayer = ({ file }) => {
         setIsPlaying(false)
     }
     if (!file) return null
-
     return (
         <div
             onMouseLeave={handleStop}
@@ -29,6 +28,9 @@ const PreviewPlayer = ({ file }) => {
                 height="100%"
                 url={file}
             />
+            {!isPlaying && poster && (
+                <img className={style.poster} src={poster} alt="" />
+            )}
         </div>
     )
 }

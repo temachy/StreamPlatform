@@ -20,6 +20,11 @@ function getUserById(id) {
     ])
 }
 
+function createUser(body) {
+    return new Users(body).save()
+}
+
 module.exports = {
     getUserById,
+    createUser,
 }

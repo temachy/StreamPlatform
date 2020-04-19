@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react'
 import Recorder from 'react-video-recorder'
 import styles from './VideoRecorder.module.scss'
-const VideoRecorder = () => {
+const VideoRecorder = ({ setVideo }) => {
     return (
         <div className={styles.recorderWrap}>
             <Recorder
                 onRecordingComplete={(videoBlob) => {
-                    // Do something with the video...
-                    console.log('videoBlob', videoBlob)
+                    setVideo(videoBlob)
                 }}
                 renderActions={({
                     isVideoInputSupported,
@@ -36,7 +35,6 @@ const VideoRecorder = () => {
                     onStopReplaying,
                 }) => (
                     <>
-                        {console.log('onTurnOnCamera', onTurnOnCamera)}
                         <MyRecorder
                             prop={{
                                 isVideoInputSupported,
@@ -99,16 +97,25 @@ const MyRecorder = ({
         onResumeRecording,
         onStopReplaying,
     },
+    prop,
 }) => {
+    // const [timer, setTimer] = useState(0.0)
+
     useEffect(() => {
         onTurnOnCamera()
     }, [])
 
+    const onSave = () => {
+        onStopReplaying()
+        onTurnOnCamera()
+    }
+
     return (
         <div className={styles.recorder}>
             {isReplayingVideo ? (
-                <div onClick={onStopReplaying} className={styles.cameraOn}>
-                    Record again
+                <div className={styles.absoluteLabel}>
+                    <div onClick={onSave}>Save</div>
+                    <div onClick={onStartRecording}>Record again</div>
                 </div>
             ) : (
                 <>
@@ -124,9 +131,9 @@ const MyRecorder = ({
                         ></div>
                     )}
 
-                    {isRecording && (
+                    {/* {isRecording && (
                         <div className={styles.timeCount}>{countdownTime}</div>
-                    )}
+                    )} */}
                 </>
             )}
         </div>
