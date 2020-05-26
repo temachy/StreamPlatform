@@ -1,7 +1,8 @@
 /node_modules
 /ui/node_modules
-src/ui/public 
-src/api/mediaFiles
+packages/ui/public 
+packages/admin/public 
+packages/api/mediaFiles
 combined.log
 error.log
-
+/media

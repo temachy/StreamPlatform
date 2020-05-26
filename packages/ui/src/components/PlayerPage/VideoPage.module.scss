@@ -1,0 +1,37 @@
+.player {
+    width: 100%;
+    height: 400px;
+    max-height: 600px;
+    margin: 0 0px 40px;
+    background: black;
+}
+
+.posterImg {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.notLive {
+    position: relative;
+    height: 100%;
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba($color: black, $alpha: 0.7);
+    }
+}
+
+.notLiveTitle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 22px;
+    text-transform: uppercase;
+}
