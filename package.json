@@ -15,8 +15,7 @@
         "bootstrap": "lerna bootstrap",
         "clean": "lerna clean",
         "lint": "lerna run lint",
-        "postinstall": "npm run bootstrap",
-        "heroku-postbuild": "./scripts/heroku.build"
+        "postinstall": "npm run bootstrap"
     },
     "jest": {
         "testEnvironment": "node",
