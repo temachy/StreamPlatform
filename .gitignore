@@ -1,7 +1,5 @@
 /node_modules
 /ui/node_modules
-packages/ui/public 
-packages/admin/public 
 packages/api/mediaFiles
 combined.log
 error.log
