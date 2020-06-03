@@ -1,7 +1,7 @@
 const NodeMediaServer = require('node-media-server')
 const StreamController = require('./features/streams/controllers')
 
-const config = {
+const config = (ffmpegPath) => ({
     logType: 3,
     server: {
         secret: 'kjVkuti2xAyF3JGCzSZTk0YWM5JhI9mgQW4rytXc',
@@ -18,7 +18,7 @@ const config = {
         allow_origin: '*',
     },
     trans: {
-        ffmpeg: process.env.PORT,
+        ffmpeg: ffmpegPath,
         tasks: [
             {
                 app: 'live',
@@ -28,15 +28,15 @@ const config = {
             },
         ],
     },
-}
+})
 
-const mediaServer = () => {
-    const nms = new NodeMediaServer(config)
+const mediaServer = (ffmpegPath) => {
+    const nms = new NodeMediaServer(config(ffmpegPath))
     const getStreamKeyFromStreamPath = (path) => {
         let parts = path.split('/')
         return parts[parts.length - 1]
     }
-
+    console.log('process.env.FFMPEG_PATH', process.env.FFMPEG_PATH)
     nms.run()
 
     nms.on('donePublish', (id, StreamPath, args) => {

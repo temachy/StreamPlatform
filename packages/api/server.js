@@ -13,7 +13,7 @@ const logger = require('./utils/logger')
 const http = require('http').createServer(app)
 const mediaServer = require('./mediaServer')
 const io = require('socket.io')(http, { origins: '*:*' })
-
+require('dotenv').config()
 mongoose.connect(db.url, { useNewUrlParser: true })
 modelsDefinition()
 
@@ -23,7 +23,6 @@ app.use(session({ secret: 'mySuperSecret' }))
 
 app.use('/', express.static(path.join(__dirname, '..', 'ui', 'build')))
 app.use('/', express.static(path.join(__dirname, '..', 'api', 'mediaFiles')))
-
 app.use((req, res, next) => {
     logger.info(req.originalUrl)
     next()
@@ -80,4 +79,4 @@ io.on('connection', (socket) => {
 io.on('disconnect', (socket) => {
     stream.close()
 })
-mediaServer()
+mediaServer(process.env.FFMPEG_PATH)
