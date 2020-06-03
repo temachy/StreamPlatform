@@ -28,10 +28,10 @@ function getAll() {
     return Users.find().lean()
 }
 
-function edit({ id, login, email, password, firstName, lastName, isDisabled }) {
+function edit({ id, login, email, firstName, lastName, isDisabled }) {
     return Users.findOneAndUpdate(
         { _id: id },
-        { login, email, password, firstName, lastName, isDisabled }
+        { login, email, firstName, lastName, isDisabled }
     )
 }
 

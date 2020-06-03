@@ -10,6 +10,9 @@ class WS {
     submitEvent(eventType, payload) {
         this.socket.emit(eventType, payload)
     }
+    subscribeTo(eventType, callBack) {
+        this.socket.on(eventType, callBack)
+    }
 }
 
 export default new WS()

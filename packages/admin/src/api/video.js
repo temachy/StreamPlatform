@@ -3,6 +3,9 @@ import { apiRequest, getToken } from '../utils/api'
 export const uploadVideo = (formData) =>
     apiRequest('/api/video/upload', 'POST', formData)
 
+export const updateVideo = (id, formData) =>
+    apiRequest(`/api/video/${id}`, 'PUT', formData)
+
 export const getVideoStream = (videoId) => {
     const options = {
         headers: {

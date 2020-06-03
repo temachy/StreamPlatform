@@ -25,6 +25,12 @@ router.post(
     upload.single('poster'),
     controller.create
 )
+router.put(
+    '/:id',
+    permissionsMiddleware(['teacher', 'admin']),
+    upload.single('poster'),
+    controller.update
+)
 router.get('/', controller.getAll)
 router.get('/:id', controller.getStreamData)
 router.delete(

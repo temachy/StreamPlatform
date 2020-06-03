@@ -17,6 +17,25 @@ const create = async (req, res) => {
     }
 }
 
+const update = async (req, res) => {
+    try {
+        const {
+            file,
+            body: { name, streamKey, isDisabled },
+            params: { id },
+        } = req
+        const payload = { id, name, streamKey, isDisabled }
+        if (file) {
+            payload.posterPath = file.filename
+        }
+        const response = await dal.updateStream(payload)
+        res.json(response)
+    } catch (error) {
+        console.log('error', error)
+        res.error({ message: error.toString() })
+    }
+}
+
 const getAll = async (req, res) => {
     try {
         const list = await dal.getAllLive()
@@ -40,7 +59,7 @@ const getStreamData = async (req, res) => {
 
 const changeLive = async (streamKey, isLive) => {
     try {
-        const stream = await dal.updateStream(streamKey, { isLive })
+        const stream = await dal.changeLive({ streamKey, isLive })
         return stream
     } catch (error) {
         console.log(error)
@@ -74,4 +93,5 @@ module.exports = {
     changeLive,
     getStreamByKey,
     deleteStream,
+    update,
 }

@@ -13,12 +13,16 @@ const VideoList = ({ list, previewComponent }) => {
                 // lg: 4,
             }}
             loading={!list}
-            dataSource={list}
-            renderItem={(item) => (
-                <List.Item>
-                    <Preview data={item} />
-                </List.Item>
-            )}
+            dataSource={
+                list ? list.filter((item) => !item.isDisabled) : undefined
+            }
+            renderItem={(item) => {
+                return (
+                    <List.Item>
+                        <Preview data={item} />
+                    </List.Item>
+                )
+            }}
         />
     )
 }

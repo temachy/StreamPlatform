@@ -7,11 +7,14 @@ import {
     VideoCameraOutlined,
     VideoCameraAddOutlined,
 } from '@ant-design/icons'
-import { Route, Link } from 'react-router-dom'
+import { Route, NavLink, Switch } from 'react-router-dom'
 import UsersTable from '../UsersTable'
 import VideosTable from '../VideosTable'
 import Header from '../Header'
 import StreamsTable from '../StreamsTable'
+import UserPage from '../UserPage'
+import VideoPage from '../VideoPage/VideoPage'
+import StreamPage from '../StreamPage'
 const { Sider, Content } = Layout
 
 const Dashboard = () => {
@@ -28,27 +31,35 @@ const Dashboard = () => {
                     style={{ padding: '60px 0px' }}
                     theme="dark"
                     mode="inline"
-                    defaultSelectedKeys={['1']}
                 >
-                    <Menu.Item key="1">
-                        <Link to="/users">
+                    <Menu.Item style={{ overflow: 'visible' }} key="1">
+                        <NavLink
+                            activeClassName={styles.activeLink}
+                            to="/users"
+                        >
                             <UserOutlined />
                             <span>Users</span>
-                        </Link>
+                        </NavLink>
                     </Menu.Item>
-                    <Menu.Item key="2">
-                        <Link to="/videos">
+                    <Menu.Item style={{ overflow: 'visible' }} key="2">
+                        <NavLink
+                            activeClassName={styles.activeLink}
+                            to="/videos"
+                        >
                             <VideoCameraOutlined />
 
                             <span>Videos</span>
-                        </Link>
+                        </NavLink>
                     </Menu.Item>
-                    <Menu.Item key="2">
-                        <Link to="/streams">
+                    <Menu.Item style={{ overflow: 'visible' }} key="3">
+                        <NavLink
+                            activeClassName={styles.activeLink}
+                            to="/streams"
+                        >
                             <VideoCameraAddOutlined />
 
                             <span>Streams</span>
-                        </Link>
+                        </NavLink>
                     </Menu.Item>
                 </Menu>
             </Sider>
@@ -62,9 +73,16 @@ const Dashboard = () => {
                         minHeight: 280,
                     }}
                 >
-                    <Route path="/users" component={UsersTable} />
-                    <Route path="/videos" component={VideosTable} />
-                    <Route path="/streams" component={StreamsTable} />
+                    <Switch>
+                        <Route path="/users/:id" component={UserPage} />
+                        <Route path="/users" component={UsersTable} />
+
+                        <Route path="/videos/:id" component={VideoPage} />
+                        <Route path="/videos" component={VideosTable} />
+
+                        <Route path="/streams/:id" component={StreamPage} />
+                        <Route path="/streams" component={StreamsTable} />
+                    </Switch>
                 </Content>
             </Layout>
         </Layout>

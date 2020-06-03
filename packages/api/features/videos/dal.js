@@ -55,9 +55,14 @@ function createVideo(name, path, posterPath, author) {
     }).save()
 }
 
+function editVideo({ id, ...rest }) {
+    return Videos.findOneAndUpdate({ _id: id }, rest)
+}
+
 module.exports = {
     getVideosList,
     getVideo,
     createVideo,
     getVideoMeta,
+    editVideo,
 }

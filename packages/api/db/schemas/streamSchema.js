@@ -8,6 +8,7 @@ const streamSchema = mongoose.Schema(
         posterPath: String,
         isLive: Boolean,
         streamKey: mongoose.Schema.Types.ObjectId,
+        isDisabled: Boolean,
     },
     { timestamps: true }
 )

@@ -1,0 +1,16 @@
+{
+    "apps": [
+        {
+            "name": "workerNode",
+            "script": "./packages/api/server.js",
+            "watch": true,
+            "exp_backoff_restart_delay": "100",
+            "error_file": "./logs/err.log",
+            "out_file": "./logs/out.log",
+            "env": {
+                "NODE_ENV": "development",
+                "FFMPEG_PATH": "/usr/bin/ffmpeg"
+            }
+        }
+    ]
+}

@@ -1,37 +1,8 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Table } from 'antd'
-
-const dataSource = [
-    {
-        key: '1',
-        name: 'Fun video about cats',
-        Author: 'Temuchin',
-        Duration: '2:09',
-        State: 'active',
-    },
-    {
-        key: '2',
-        name: 'Fun video about dogs',
-        Author: 'Temuchin',
-        Duration: '5:54',
-        State: 'active',
-    },
-    {
-        key: '5',
-        name: 'How to cook pizza',
-        Author: 'Test',
-        Duration: '22:08',
-        State: 'active',
-    },
-    {
-        key: '6',
-        name: 'Why we eat sugar?',
-        Author: 'Test',
-        Duration: '9:33',
-        State: 'inactive',
-    },
-]
-
+import { message } from 'antd'
+import { useHistory } from 'react-router-dom'
+import { getList } from '../../api/video'
 const columns = [
     {
         title: 'Name',
@@ -40,24 +11,62 @@ const columns = [
     },
     {
         title: 'Author',
-        dataIndex: 'Author',
-        key: 'Author',
+        dataIndex: 'author',
+        key: 'author',
     },
     {
-        title: 'Duration',
-        dataIndex: 'Duration',
-        key: 'Duration',
+        title: 'Poster',
+        dataIndex: 'posterPath',
+        key: 'posterPath',
     },
-
     {
-        title: 'State',
-        dataIndex: 'State',
-        key: 'State',
+        title: 'CreatedAt',
+        dataIndex: 'createdAt',
+        key: 'createdAt',
+    },
+    {
+        title: 'isDisabled',
+        dataIndex: 'isDisabled',
+        key: 'isDisabled',
     },
 ]
 
 const VideosTable = () => {
-    return <Table dataSource={dataSource} columns={columns} />
+    const [videos, setVideos] = useState()
+    const history = useHistory()
+
+    const redirect = (path) => () => {
+        history.push(`/videos/${path}`)
+    }
+
+    const fetchVideos = async () => {
+        try {
+            const response = await getList()
+            setVideos(
+                response.data.map((video) => ({
+                    ...video,
+                    author: video.user.login,
+                }))
+            )
+        } catch (error) {
+            message.error(error.toString())
+        }
+    }
+    useEffect(() => {
+        fetchVideos()
+    }, [])
+
+    return (
+        <Table
+            dataSource={videos}
+            columns={columns}
+            onRow={(record) => {
+                return {
+                    onClick: redirect(record._id),
+                }
+            }}
+        />
+    )
 }
 
 export default VideosTable

@@ -6,6 +6,7 @@ const videoSchema = mongoose.Schema(
         author: mongoose.Schema.Types.ObjectId,
         path: String,
         posterPath: String,
+        isDisabled: Boolean,
     },
     { timestamps: true }
 )

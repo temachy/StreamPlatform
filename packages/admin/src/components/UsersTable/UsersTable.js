@@ -58,7 +58,7 @@ const UsersTable = () => {
             columns={columns}
             onRow={(record, rowIndex) => {
                 return {
-                    onClick: redirect(record._id), // click row
+                    onClick: redirect(record._id),
                 }
             }}
         />

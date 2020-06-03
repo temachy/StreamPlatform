@@ -15,9 +15,10 @@ async function login(req, res, next) {
             role,
             _id,
             password: userPassword,
+            isDisabled,
         } = await getUser(login)
 
-        if (!_id) {
+        if (!_id || isDisabled) {
             res.status(422).json({ message: 'Login or email aren`t valid' })
         }
 

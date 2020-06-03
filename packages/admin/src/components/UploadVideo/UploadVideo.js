@@ -1,128 +1,105 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     Upload,
-    message,
     Button,
-    Row,
-    Col,
     Divider,
     Typography,
     Input,
+    Form,
+    Checkbox,
 } from 'antd'
-import { uploadVideo } from '../../api/video'
-import VideoRecorder from '../VideoRecorder'
-import styles from './UploadVideo.module.scss'
 import { InboxOutlined } from '@ant-design/icons'
 
 const { Dragger } = Upload
 
-const props = {
-    name: 'file',
-    multiple: true,
-    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-    onChange(info) {
-        const { status } = info.file
-        if (status !== 'uploading') {
-            console.log(info.file, info.fileList)
-        }
-        if (status === 'done') {
-            message.success(`${info.file.name} file uploaded successfully.`)
-        } else if (status === 'error') {
-            message.error(`${info.file.name} file upload failed.`)
-        }
-    },
+const useSingleUpload = () => {
+    const [file, setFile] = useState(null)
+    const beforeUpload = (file) => {
+        setFile(file)
+        return false
+    }
+    const clear = () => {
+        setFile(null)
+    }
+    return [file, beforeUpload, clear]
 }
-const UploadVideo = () => {
-    const handleSubmit = async (e) => {
-        try {
-            e.preventDefault()
-            const formData = new FormData(e.target)
-            await uploadVideo(formData)
-            message.success('Video was successfully uploaded')
-        } catch (error) {
-            message.error(error.toString())
-        }
+
+const UploadForm = ({ data, handleSubmit }) => {
+    const [form] = Form.useForm()
+    const [videoFile, beforeUploadVideo, clearVideo] = useSingleUpload()
+    const [posterFile, beforeUploadPoster, clearPoster] = useSingleUpload()
+    useEffect(() => {
+        form.setFieldsValue(data)
+    }, [])
+
+    const onSubmit = ({ name, isDisabled }) => {
+        const formData = new FormData()
+        formData.append('name', name)
+        formData.append('isDisabled', isDisabled)
+        formData.append('video', videoFile)
+        formData.append('poster', posterFile)
+        handleSubmit(formData)
     }
 
     return (
-        <Row className={styles.container}>
-            <Col span="12">
-                <div>
-                    <Typography.Title level={4}>Record video</Typography.Title>
-                    <Divider />
-                    <Typography.Paragraph>Video name</Typography.Paragraph>
+        <Form form={form} name="uploadVideo" onFinish={onSubmit}>
+            <Typography.Title level={4}>Upload video</Typography.Title>
+            <Divider />
+            <Typography.Paragraph>Video name</Typography.Paragraph>
 
-                    <Input type="text" placeholder="Type video name" />
-                    <br />
-                    <br />
+            <Form.Item
+                name="name"
+                rules={[{ required: true, message: 'Please input name!' }]}
+            >
+                <Input style={{ width: 300 }} placeholder="Type video name" />
+            </Form.Item>
 
-                    <VideoRecorder />
-                    <br />
+            <Typography.Paragraph>Video file</Typography.Paragraph>
 
-                    <Typography.Paragraph>Poster image</Typography.Paragraph>
+            <Dragger
+                fileList={videoFile ? [videoFile] : []}
+                onRemove={clearVideo}
+                name="video"
+                beforeUpload={beforeUploadVideo}
+            >
+                <p className="ant-upload-drag-icon">
+                    <InboxOutlined />
+                </p>
+                <p className="ant-upload-text">
+                    Click or drag video file to upload
+                </p>
+            </Dragger>
+            <br />
 
-                    <Dragger {...props}>
-                        <p className="ant-upload-drag-icon">
-                            <InboxOutlined />
-                        </p>
-                        <p className="ant-upload-text">
-                            Click or drag image file to upload
-                        </p>
-                        <p className="ant-upload-hint">
-                            Support for a single or bulk upload.
-                        </p>
-                    </Dragger>
-                    <br />
-                    <Button>Upload</Button>
-                </div>
-            </Col>
-            <Col offset="1" span="1">
-                <div className={styles.divider}></div>
-            </Col>
-            <Col span="10">
-                <div>
-                    <Typography.Title level={4}>Upload video</Typography.Title>
-                    <Divider />
-                    <Typography.Paragraph>Video name</Typography.Paragraph>
+            <Typography.Paragraph>Poster image</Typography.Paragraph>
 
-                    <Input type="text" placeholder="Type video name" />
-                    <br />
-                    <br />
-
-                    <Typography.Paragraph>Video file</Typography.Paragraph>
-
-                    <Dragger {...props}>
-                        <p className="ant-upload-drag-icon">
-                            <InboxOutlined />
-                        </p>
-                        <p className="ant-upload-text">
-                            Click or drag video file to upload
-                        </p>
-                        <p className="ant-upload-hint">
-                            Support for a single or bulk upload.
-                        </p>
-                    </Dragger>
-                    <br />
-
-                    <Typography.Paragraph>Poster image</Typography.Paragraph>
-
-                    <Dragger {...props}>
-                        <p className="ant-upload-drag-icon">
-                            <InboxOutlined />
-                        </p>
-                        <p className="ant-upload-text">
-                            Click or drag image file to upload
-                        </p>
-                        <p className="ant-upload-hint">
-                            Support for a single or bulk upload.
-                        </p>
-                    </Dragger>
-                    <br />
-                    <Button>Upload</Button>
-                </div>
-            </Col>
-        </Row>
+            <Dragger
+                fileList={posterFile ? [posterFile] : []}
+                onRemove={clearPoster}
+                name="poster"
+                beforeUpload={beforeUploadPoster}
+            >
+                <p className="ant-upload-drag-icon">
+                    <InboxOutlined />
+                </p>
+                <p className="ant-upload-text">
+                    Click or drag image file to upload
+                </p>
+            </Dragger>
+            <Form.Item name="isDisabled" valuePropName="checked" noStyle>
+                <Checkbox>Is disabled?</Checkbox>
+            </Form.Item>
+            <Form.Item>
+                <Button
+                    style={{ background: '#1eafb5', width: 150, marginTop: 20 }}
+                    type="primary"
+                    htmlType="submit"
+                >
+                    Update
+                </Button>
+            </Form.Item>
+        </Form>
     )
 }
 
-export default UploadVideo
+export default UploadForm

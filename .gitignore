@@ -6,3 +6,4 @@ packages/api/mediaFiles
 combined.log
 error.log
 /media
+packages/api/.env

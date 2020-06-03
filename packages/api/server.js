@@ -10,10 +10,8 @@ const modelsDefinition = require('./db/modelsDefinition')
 const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('./swaggerSettings')
 const logger = require('./utils/logger')
-const fs = require('fs')
 const http = require('http').createServer(app)
 const mediaServer = require('./mediaServer')
-
 const io = require('socket.io')(http, { origins: '*:*' })
 
 mongoose.connect(db.url, { useNewUrlParser: true })
@@ -50,19 +48,7 @@ mongoDb.once('open', function () {
         console.log('We are live on ' + port)
     })
 })
-const stream = fs.createWriteStream(
-    path.join(__dirname, 'mediaFiles', '1589110625679-732053251blob')
-)
 
-io.on('connection', (socket) => {
-    socket.on('stream', (payload) => {
-        stream.write(payload)
-        console.log('sending stream ', payload.byteLength / 1024)
-    })
-})
-io.on('disconnect', (socket) => {
-    stream.close()
-})
 process.on('uncaughtException', () => {
     process.exit()
 })
@@ -70,5 +56,28 @@ process.on('uncaughtException', () => {
 process.on('SIGTERM', () => {
     process.exit()
 })
+let localData
+io.on('connection', (socket) => {
+    socket.on('dataTranslation', (data) => {
+        try {
+            console.log('Blob', data)
 
+            socket.broadcast.emit('dataBroadcast', data)
+        } catch (err) {
+            console.log('err', err)
+        }
+    })
+    socket.on('getStream', (data) => {
+        console.log('localData', localData)
+        socket.emit('sendOffer', localData)
+    })
+    socket.on('make-answer', (data) => {
+        console.log('sendAnswerToHost', data)
+
+        // socket.emit('sendOffer', localData)
+    })
+})
+io.on('disconnect', (socket) => {
+    stream.close()
+})
 mediaServer()

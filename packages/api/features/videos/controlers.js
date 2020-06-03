@@ -91,17 +91,22 @@ async function editVideo(req, res) {
     try {
         const {
             files: { video, poster },
-            body: { name, isActive },
+            body: { name, isDisabled },
             params: { id },
-            decoded: user,
         } = req
-        await dal.editVideo(
+        const updateRequest = {
+            id,
             name,
-            video[0].path,
-            poster[0].path,
-            user._id,
-            isActive
-        )
+            isDisabled,
+        }
+        if (video) {
+            updateRequest.videoPath = video[0].path
+        }
+        if (poster) {
+            updateRequest.posterPath = poster[0].path
+        }
+
+        await dal.editVideo(updateRequest)
         res.json({ message: `Video ${name} was edited!` })
     } catch (error) {
         console.log('error', error)

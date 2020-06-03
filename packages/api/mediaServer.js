@@ -2,13 +2,13 @@ const NodeMediaServer = require('node-media-server')
 const StreamController = require('./features/streams/controllers')
 
 const config = {
+    logType: 3,
     server: {
         secret: 'kjVkuti2xAyF3JGCzSZTk0YWM5JhI9mgQW4rytXc',
     },
     rtmp: {
         port: 1935,
-        chunk_size: 30000,
-        gop_cache: true,
+        chunk_size: 60000,
         ping: 30,
         ping_timeout: 60,
     },
@@ -18,17 +18,13 @@ const config = {
         allow_origin: '*',
     },
     trans: {
-        ffmpeg: '/usr/local/Cellar/ffmpeg/4.2.2_1/bin/ffmpeg',
+        ffmpeg: process.env.PORT,
         tasks: [
             {
                 app: 'live',
                 hls: true,
                 hlsFlags:
-                    '[hls_time=2:hls_list_size=3:hls_flags=delete_segments]',
-                dash: true,
-                dashFlags: '[f=dash:window_size=3:extra_window_size=5]',
-                mp4: true,
-                mp4Flags: '[movflags=faststart]',
+                    '[hls_time=5:hls_list_size=2:hls_flags=delete_segments]',
             },
         ],
     },
@@ -41,24 +37,25 @@ const mediaServer = () => {
         return parts[parts.length - 1]
     }
 
-    nms.on('prePublish', async (id, StreamPath, args) => {
-        let stream_key = getStreamKeyFromStreamPath(StreamPath)
-        const stream = await StreamController.getStreamByKey(stream_key)
-
-        if (stream) {
-            await StreamController.changeLive(stream_key, true)
-            return true
-        }
-
-        let session = nms.getSession(id)
-        session.reject()
-    })
+    nms.run()
 
     nms.on('donePublish', (id, StreamPath, args) => {
         let stream_key = getStreamKeyFromStreamPath(StreamPath)
         StreamController.changeLive(stream_key, false)
     })
-    nms.run()
+
+    nms.on('postPublish', async (id, StreamPath, args) => {
+        let stream_key = getStreamKeyFromStreamPath(StreamPath)
+        const stream = await StreamController.getStreamByKey(stream_key)
+
+        if (stream) {
+            console.log('stream', stream)
+            await StreamController.changeLive(stream_key, true)
+            return true
+        }
+        let session = nms.getSession(id)
+        session.reject()
+    })
 }
 
 module.exports = mediaServer

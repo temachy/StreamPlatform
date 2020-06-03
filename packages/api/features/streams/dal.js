@@ -40,8 +40,8 @@ const getStream = (id) => {
     ])
 }
 
-const updateStream = (streamKey, updatePayload) => {
-    return Streams.update({ streamKey }, updatePayload)
+const updateStream = ({ id, ...rest }) => {
+    return Streams.findOneAndUpdate({ _id: id }, rest)
 }
 
 const getStreamByKey = (streamKey) => {
@@ -52,6 +52,10 @@ const deleteStream = (id) => {
     return Streams.deleteOne({ _id: id })
 }
 
+const changeLive = ({ streamKey, isLive }) => {
+    return Streams.findOneAndUpdate({ streamKey }, { isLive })
+}
+
 module.exports = {
     createStream,
     getAllLive,
@@ -59,4 +63,5 @@ module.exports = {
     updateStream,
     getStreamByKey,
     deleteStream,
+    changeLive,
 }

@@ -29,3 +29,9 @@
     margin-right: 30px;
     cursor: pointer;
 }
+
+.activeLink {
+    display: inline-block !important;
+
+    border-bottom: 1px solid white;
+}

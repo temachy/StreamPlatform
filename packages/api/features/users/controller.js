@@ -45,20 +45,12 @@ async function allUsers(req, res) {
 
 async function editUser(req, res) {
     try {
-        const {
-            login,
-            email,
-            password,
-            firstName,
-            lastName,
-            isDisabled,
-        } = req.body
+        const { login, email, firstName, lastName, isDisabled } = req.body
         const { id } = req.params
         const user = await dal.edit({
             id,
             login,
             email,
-            password,
             firstName,
             lastName,
             isDisabled,
