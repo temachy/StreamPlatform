@@ -18,11 +18,11 @@ const links = [
         title: 'Streams',
         permissions: [roles.TEACHER, roles.ADMIN],
     },
-    {
-        to: '/profile',
-        title: 'Profile',
-        permissions: [roles.USER, roles.TEACHER, roles.ADMIN],
-    },
+    // {
+    //     to: '/profile',
+    //     title: 'Profile',
+    //     permissions: [roles.USER, roles.TEACHER, roles.ADMIN],
+    // },
 ]
 
 const Header = ({ logout, user }) => {

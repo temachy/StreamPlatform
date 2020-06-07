@@ -2,20 +2,14 @@ import React, { useEffect } from 'react'
 import Routes from '../Routes'
 import { connect } from 'react-redux'
 import { Spin } from 'antd'
-import { Switch, Route } from 'react-router-dom'
+
 const App = (props) => {
     useEffect(() => {
         props.checkAuth()
     }, [])
 
     if (props.auth === undefined) return <Spin />
-    return (
-        <Routes />
-        // <Switch>
-        //     <Route exact path={'/'} component={Routes} />
-        //     {/* <Route exact path={'/dashboard/*'} component={Dashboard} /> */}
-        // </Switch>
-    )
+    return <Routes />
 }
 
 const mapDispatch = ({ auth: { checkAuth } }) => ({

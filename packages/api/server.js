@@ -12,7 +12,6 @@ const swaggerDocument = require('./swaggerSettings')
 const logger = require('./utils/logger')
 const http = require('http').createServer(app)
 const mediaServer = require('./mediaServer')
-const io = require('socket.io')(http, { origins: '*:*' })
 require('dotenv').config()
 mongoose.connect(db.url, { useNewUrlParser: true })
 modelsDefinition()
@@ -54,29 +53,5 @@ process.on('uncaughtException', () => {
 
 process.on('SIGTERM', () => {
     process.exit()
-})
-let localData
-io.on('connection', (socket) => {
-    socket.on('dataTranslation', (data) => {
-        try {
-            console.log('Blob', data)
-
-            socket.broadcast.emit('dataBroadcast', data)
-        } catch (err) {
-            console.log('err', err)
-        }
-    })
-    socket.on('getStream', (data) => {
-        console.log('localData', localData)
-        socket.emit('sendOffer', localData)
-    })
-    socket.on('make-answer', (data) => {
-        console.log('sendAnswerToHost', data)
-
-        // socket.emit('sendOffer', localData)
-    })
-})
-io.on('disconnect', (socket) => {
-    stream.close()
 })
 mediaServer(process.env.FFMPEG_PATH)

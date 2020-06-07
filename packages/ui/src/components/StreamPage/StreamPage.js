@@ -11,14 +11,13 @@ const StreamPage = () => {
         const response = await getStreamDataApi(id)
         setStreamData(response.data)
     }
-
     useEffect(() => {
         getStreamData()
     }, [])
     if (!streamData) return null
     return (
         <PlayerPage
-            file={`http://127.0.0.1:8888/live/${streamData.streamKey}/index.m3u8`}
+            file={`http://${process.env.REACT_APP_HOST}:8888/live/${streamData.streamKey}/index.m3u8`}
             videoMeta={streamData}
             player={StreamPlayer}
         />

@@ -22,10 +22,10 @@ const MetaData = ({ video }) => {
                     </Avatar>
                     <p className={styles.author}>{video.user.login}</p>
                 </Row>
-                <Row align="middle">
+                {/* <Row align="middle">
                     <Statistic style={{marginRight: 10}} valueStyle={{color: 'white', marginRight: 10}} value={9} prefix={<LikeFilled style={{color: 'white', marginRight: 10}} />} />
                     <Statistic valueStyle={{color: 'white', marginRight: 10}} value={1} prefix={<DislikeFilled style={{color: 'white', marginRight: 10}} />} />
-                </Row>
+                </Row> */}
             </Row>
 
             <Divider />

@@ -7,13 +7,15 @@ import { SoundFilled, SoundOutlined } from '@ant-design/icons'
 
 const StreamPlayer = ({ fileStream, meta }) => {
     const [isLoaded, setIsLoaded] = useState(false)
+
     const [isMuted, setIsMuted] = useState(true)
     const [volume, setVolume] = useState(0.5)
 
     const playerRef = useRef()
 
     const repeatIfFails = () => {
-        axios
+        let counter = 20
+        return axios
             .get(fileStream)
             .then((response) => {
                 if (response.data.indexOf('#EXT-X-TARGETDURATION:0') !== -1) {
@@ -22,7 +24,12 @@ const StreamPlayer = ({ fileStream, meta }) => {
                 setIsLoaded(true)
             })
             .catch((err) => {
-                setTimeout(repeatIfFails, 1000)
+                setTimeout(() => {
+                    if (counter) {
+                        repeatIfFails()
+                        counter -= 1
+                    }
+                }, 1000)
             })
     }
 
