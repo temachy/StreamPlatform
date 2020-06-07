@@ -54,4 +54,5 @@ process.on('uncaughtException', () => {
 process.on('SIGTERM', () => {
     process.exit()
 })
-mediaServer(process.env.FFMPEG_PATH)
+
+mediaServer(process.env.FFMPEG_PATH, process.env.NODE_ENV)

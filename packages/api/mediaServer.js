@@ -17,6 +17,7 @@ const config = (ffmpegPath) => ({
         mediaroot: 'media',
         allow_origin: '*',
     },
+
     trans: {
         ffmpeg: ffmpegPath,
         tasks: [
@@ -30,8 +31,16 @@ const config = (ffmpegPath) => ({
     },
 })
 
-const mediaServer = (ffmpegPath) => {
-    const nms = new NodeMediaServer(config(ffmpegPath))
+const mediaServer = (ffmpegPath, nodeEnv) => {
+    const mediaConfig = config(ffmpegPath)
+    if (nodeEnv === 'production') {
+        mediaConfig.https = {
+            port: 8443,
+            key: '/etc/letsencrypt/live/temuchik.website/privkey.pem',
+            cert: '/etc/letsencrypt/live/temuchik.website/fullchain.pem;',
+        }
+    }
+    const nms = new NodeMediaServer(mediaConfig)
     const getStreamKeyFromStreamPath = (path) => {
         let parts = path.split('/')
         return parts[parts.length - 1]
