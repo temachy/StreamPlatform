@@ -17,7 +17,7 @@ const StreamPage = () => {
     if (!streamData) return null
     return (
         <PlayerPage
-            file={`http://${process.env.REACT_APP_HOST}:8888/live/${streamData.streamKey}/index.m3u8`}
+            file={`${process.env.REACT_APP_HOST}/live/${streamData.streamKey}/index.m3u8`}
             videoMeta={streamData}
             player={StreamPlayer}
         />

@@ -39,7 +39,9 @@ const StreamPlayer = ({ fileStream, meta }) => {
     }
 
     useEffect(() => {
-        repeatIfFails()
+        if (meta.isLive) {
+            repeatIfFails()
+        }
     }, [])
 
     if (!fileStream) return null
