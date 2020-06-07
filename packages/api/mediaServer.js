@@ -37,7 +37,7 @@ const mediaServer = (ffmpegPath, nodeEnv) => {
         mediaConfig.https = {
             port: 8443,
             key: '/etc/letsencrypt/live/temuchik.website/privkey.pem',
-            cert: '/etc/letsencrypt/live/temuchik.website/fullchain.pem;',
+            cert: '/etc/letsencrypt/live/temuchik.website/fullchain.pem',
         }
     }
     const nms = new NodeMediaServer(mediaConfig)
